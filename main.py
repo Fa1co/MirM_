@@ -85,9 +85,10 @@ def repair_fishing_rod(flag):
     if flag:
         while True:
             try:
-                broken_item_cords = ObjectDetection.find_pickaxe('./fishing/broken_item_icon.jpg')
-                
+                broken_item_cords = ObjectDetection.find_pickaxe('./fishing/broken_item_icon1.jpg')
+
                 if broken_item_cords[0] > 0 and broken_item_cords[1] > 0:
+                    print(broken_item_cords)
                     flag = False
                     return flag
             except:
@@ -221,6 +222,6 @@ def repair_fishing_rod(flag):
 if __name__ == '__main__':
 
     status = 1
-    flag = False
+    flag = True
     while True:
         flag = repair_fishing_rod(flag)
