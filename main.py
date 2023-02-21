@@ -82,13 +82,14 @@ class ObjectDetection:
 
 
 def repair_fishing_rod(flag):
-    if  flag:
+    if flag:
         while True:
             try:
-                broken_item_cords = ObjectDetection.find_pickaxe('./fishing/broken_item.png')
+                broken_item_cords = ObjectDetection.find_pickaxe('./fishing/broken_item_icon.jpg')
+                print(broken_item_cords)
                 if broken_item_cords[0] > 0 and broken_item_cords[1] > 0:
                     flag = False
-                    break
+                    return flag
             except:
                 print("Проблема с поиском кнопки сломанный предмет")
 
@@ -97,11 +98,24 @@ def repair_fishing_rod(flag):
         time.sleep(1)
         pyautogui.press("i")
         time.sleep(1)
-        repair_icon_cords = ObjectDetection.find_pickaxe('./fishing/repair_icon.jpg')
-        pyautogui.click(x=repair_icon_cords[0]+15, y=repair_icon_cords[1]+5, duration=0.6, button='left')
-        time.sleep(0.5)
-        move_to_cords = ObjectDetection.find_pickaxe('./fishing/moveTo.png')
-        pyautogui.click(x=move_to_cords[0], y=move_to_cords[1], duration=0.6, button='left')
+        while True:
+            try:
+                repair_icon_cords = ObjectDetection.find_pickaxe('./fishing/repair_icon.jpg')
+                if repair_icon_cords[0] > 0 and repair_icon_cords[1] > 0:
+                    pyautogui.click(x=repair_icon_cords[0] + 15, y=repair_icon_cords[1] + 5, duration=0.6, button='left')
+                    break
+            except:
+                print("Проблема с repair_icon")
+
+        while True:
+            try:
+                move_to_cords = ObjectDetection.find_pickaxe('./fishing/moveTo_2.jpg')
+                print(move_to_cords)
+                if move_to_cords[0] > 0 and move_to_cords[1] > 0:
+                    pyautogui.click(x=move_to_cords[0]+80, y=move_to_cords[1]+15, duration=0.6, button='left')
+                    break
+            except:
+                print("Проблема с moveTo")
         pyautogui.press('i')
         while True:
             try:
@@ -141,14 +155,16 @@ def repair_fishing_rod(flag):
                     break
             except:
                 print("Проблема с поиском кнопки закрыть")
-        while True:
-            try:
-                zone_cords = ObjectDetection.find_pickaxe('./fishing/save_zone.jpg')
-                if zone_cords[0] > 0 and zone_cords[1] > 0:
-                    pyautogui.click(x=zone_cords[0]+50, y=zone_cords[1]+50, duration=0.6, button='left')
-                    break
-            except:
-                print("Проблема с поиском карты")
+        # while True:
+        #     try:
+        #         zone_cords = ObjectDetection.find_pickaxe('./fishing/save_zone.jpg')
+        #         if zone_cords[0] > 0 and zone_cords[1] > 0:
+        #             pyautogui.click(x=zone_cords[0]+50, y=zone_cords[1]+50, duration=0.6, button='left')
+        #             break
+        #     except:
+        #         print("Проблема с поиском карты")
+        time.sleep(0.5)
+        pyautogui.press('m')
 
         while True:
             try:
@@ -170,7 +186,16 @@ def repair_fishing_rod(flag):
 
         while True:
             try:
-                auto_move_cords = ObjectDetection.find_pickaxe('./fishing/free_tp.jpg')
+                auto_move_cords = ObjectDetection.find_pickaxe('./fishing/teleport.jpg')
+                if auto_move_cords[0] > 0 and auto_move_cords[1] > 0:
+                    pyautogui.click(x=auto_move_cords[0] + 10, y=auto_move_cords[1] + 10, duration=0.6, button='left')
+                    break
+            except:
+                print("Проблема с поиском кнопки автоперемещение")
+
+        while True:
+            try:
+                auto_move_cords = ObjectDetection.find_pickaxe('./fishing/goTo.jpg')
                 if auto_move_cords[0] > 0 and auto_move_cords[1] > 0:
                     pyautogui.click(x=auto_move_cords[0] + 10, y=auto_move_cords[1] + 10, duration=0.6, button='left')
                     break
@@ -182,10 +207,10 @@ def repair_fishing_rod(flag):
                 fishing_icon_cords = ObjectDetection.find_pickaxe('./fishing/fish_icon.jpg')
                 print(fishing_icon_cords)
                 if fishing_icon_cords[0] > 0 and fishing_icon_cords[1] > 0:
-                    pyautogui.press('b')
-                    pyautogui.click(x=fishing_icon_cords[0] + 10, y=fishing_icon_cords[1] + 10, duration=0.6, button='left')
+                    pyautogui.click(x=fishing_icon_cords[0] + 20, y=fishing_icon_cords[1] + 20, duration=0.6, button='left')
                     flag = True
-                    break
+                    return flag
+
             except:
                 print("Проблема с поиском кнопки рыбалки")
 
@@ -196,6 +221,6 @@ def repair_fishing_rod(flag):
 if __name__ == '__main__':
 
     status = 1
-    flag = True
+    flag = False
     while True:
-        repair_fishing_rod(flag)
+        flag = repair_fishing_rod(flag)
