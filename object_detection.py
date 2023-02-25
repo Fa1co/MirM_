@@ -4,9 +4,21 @@ import win32gui
 import numpy as np
 from PIL import ImageGrab
 
-WINDOW_SUBSTRING = "MIRMG(2)"
+# WINDOW_SUBSTRING = "MIRMG(2)"
+
+class global_var:
+    WINDOW_SUBSTRING = "MIRMG(2)"
+
+
 
 class ObjectDetection:
+    globalVar = global_var()
+
+
+    @staticmethod
+    def set_window_substring(window_name):
+        global_var.WINDOW_SUBSTRING = window_name
+
 
 
     @staticmethod
@@ -19,11 +31,12 @@ class ObjectDetection:
         screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
         win32gui.EnumWindows(ObjectDetection.set_window_coordinates, window_info)
         return window_info
+
     @staticmethod
     # get information about albion online client
     def set_window_coordinates(hwnd, window_info):
         if win32gui.IsWindowVisible(hwnd):
-            if WINDOW_SUBSTRING in win32gui.GetWindowText(hwnd):
+            if global_var.WINDOW_SUBSTRING in win32gui.GetWindowText(hwnd):
                 rect = win32gui.GetWindowRect(hwnd)
                 x = rect[0]
                 y = rect[1]
@@ -46,7 +59,7 @@ class ObjectDetection:
         return img
 
     @staticmethod
-    def find_pickaxe(template_path, threshold=0.8, method=cv.TM_CCOEFF_NORMED):
+    def find_object(template_path, threshold=0.8, method=cv.TM_CCOEFF_NORMED):
         # get information about albion online client (screen width, height)
         window_info = ObjectDetection.get_window_info()
         # make  rgb screenshot of location
@@ -68,3 +81,6 @@ class ObjectDetection:
             return loc[1][0], loc[0][0]
         else:
             return loc
+
+    def get_globalVar(self):
+        return self.globalVar.WINDOW_SUBSTRING
